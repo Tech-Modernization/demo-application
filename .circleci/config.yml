@@ -27,5 +27,5 @@ workflows:
     jobs:
       - build-and-push-image
       - deploy-image:
-          requires:gst
+          requires:
             - build-and-push-image
