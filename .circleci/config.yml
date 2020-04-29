@@ -10,18 +10,31 @@ jobs:
       - run: gcloud --quiet config set project ${GCP_PROJECT}
       - run: gcloud docker -- push eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1
 
+#  deploy-image:
+#    machine: true
+#    steps:
+#      - checkout
+#      - run: echo ${GCP_CREDS} > ${HOME}/gcp-key.json
+#      - run: export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
+#      - run: export VERSION=${CIRCLE_SHA1:latest}
+#      - run: gcloud auth activate-service-account --key-file=${HOME}/gcp-key.json
+#      - run: gcloud --quiet config set project ${GCP_PROJECT}
+#      - run: gcloud --quiet config set compute/zone ${CLUSTER_REGION}
+#      - run: gcloud container clusters get-credentials ${CLUSTER_NAME}
+#      - run: cat k8s/*.yaml | envsubst | kubectl apply -f -
+
   deploy-image:
-    machine: true
+    docker:
+      - image: google/cloud-sdk
     steps:
-      - checkout
-      - run: echo ${GCP_CREDS} > ${HOME}/gcp-key.json
-      - run: export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
-      - run: export VERSION=${CIRCLE_SHA1:latest}
-      - run: gcloud auth activate-service-account --key-file=${HOME}/gcp-key.json
-      - run: gcloud --quiet config set project ${GCP_PROJECT}
-      - run: gcloud --quiet config set compute/zone ${CLUSTER_REGION}
-      - run: gcloud container clusters get-credentials ${CLUSTER_NAME}
-      - run: cat k8s/*.yaml | envsubst | kubectl apply -f -
+      - run: |
+          echo $GCP_CREDS | gcloud auth activate-service-account --key-file=-
+          export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
+          export VERSION=${CIRCLE_SHA1:latest}
+          gcloud --quiet config set project ${GCP_PROJECT}
+          gcloud --quiet config set compute/zone ${CLUSTER_REGION}
+          gcloud container clusters get-credentials ${CLUSTER_NAME}
+          cat k8s/*.yaml | envsubst | kubectl apply -f -
 
 workflows:
   version: 2
