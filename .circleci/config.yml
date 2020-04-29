@@ -4,26 +4,37 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: echo ${GCP_CREDS} > ${HOME}/gcp-key.json
-      - run: docker build --rm=false -t eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1 .
-      - run: gcloud auth activate-service-account --key-file=${HOME}/gcp-key.json
-      - run: gcloud --quiet config set project ${GCP_PROJECT}
-      - run: gcloud docker -- push eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1
+      - run:
+          name: Build docker image
+          command: |
+            echo ${GCP_CREDS} > ${HOME}/gcp-key.json
+            docker build --rm=false -t eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1 .
+      - run:
+          name: Push docker image to gcr
+          command: |
+            gcloud auth activate-service-account --key-file=${HOME}/gcp-key.json
+            gcloud --quiet config set project ${GCP_PROJECT}
+            gcloud docker -- push eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1
 
   deploy-image:
     docker:
       - image: google/cloud-sdk
     steps:
       - checkout
-      - run: apt-get install gettext-base
-      - run: |
-          echo $GCP_CREDS | gcloud auth activate-service-account --key-file=-
-          export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
-          export VERSION=${CIRCLE_SHA1:latest}
-          gcloud --quiet config set project ${GCP_PROJECT}
-          gcloud --quiet config set compute/zone ${CLUSTER_REGION}
-          gcloud container clusters get-credentials ${CLUSTER_NAME}
-          cat k8s/*.yaml | envsubst | kubectl apply -f -
+      - run:
+          name: Install envsubst
+          command: |
+            apt-get install gettext-base
+      - run:
+          name: Deploy K8s yaml
+          command: |
+            echo $GCP_CREDS | gcloud auth activate-service-account --key-file=-
+            export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
+            export VERSION=${CIRCLE_SHA1:latest}
+            gcloud --quiet config set project ${GCP_PROJECT}
+            gcloud --quiet config set compute/zone ${CLUSTER_REGION}
+            gcloud container clusters get-credentials ${CLUSTER_NAME}
+            cat k8s/*.yaml | envsubst | kubectl apply -f -
 
 workflows:
   version: 2
