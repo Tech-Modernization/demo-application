@@ -3,8 +3,9 @@
 set -ex
 
 echo "-> Authenticating with GCloud"
-echo "${GCP_CREDS}" | gcloud auth activate-service-account --key-file -
-gcp_project_name=$(echo "$GCP_CREDS" | jq -r '.project_id')
+gcloud auth activate-service-account --key-file ${GCP_CREDS}
+
+gcp_project_name="jagendra-atal-prakash-contino"
 
 export IMAGE=eu.gcr.io/${gcp_project_name}/${IMAGE_NAME}
 export VERSION=${CIRCLE_SHA1:latest}
