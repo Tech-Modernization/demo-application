@@ -18,7 +18,7 @@ jobs:
       - run: export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
       - run: export VERSION=${CIRCLE_SHA1:latest}
       - run: gcloud auth activate-service-account --key-file=${HOME}/gcp-key.json
-      - run: gcloud container clusters get-credentials "${CLUSTER_NAME}" --region "${CLUSTER_REGION}"
+      - run: gcloud container clusters get-credentials "${CLUSTER_NAME}" --region="${CLUSTER_REGION}" --project=${GCP_PROJECT}
       - run: cat k8s/*.yaml | envsubst | kubectl apply -f -
 
 workflows:
