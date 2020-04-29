@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-demo
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: testmynewapplication.tk
+      http:
+        paths:
+          - backend:
+              serviceName: demo-application
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - testmynewapplication.tk
+      secretName: demo-crt

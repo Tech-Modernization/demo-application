@@ -10,4 +10,4 @@ spec:
     targetPort: http
   selector:
     app: demo-application
-  type: LoadBalancer  
+  type: NodePort
