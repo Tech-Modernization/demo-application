@@ -28,4 +28,4 @@ workflows:
       - build-and-push-image
       - deploy-image:
           requires:
-            - push-image
+            - build-and-push-image
