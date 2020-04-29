@@ -10,23 +10,12 @@ jobs:
       - run: gcloud --quiet config set project ${GCP_PROJECT}
       - run: gcloud docker -- push eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:$CIRCLE_SHA1
 
-#  deploy-image:
-#    machine: true
-#    steps:
-#      - checkout
-#      - run: echo ${GCP_CREDS} > ${HOME}/gcp-key.json
-#      - run: export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
-#      - run: export VERSION=${CIRCLE_SHA1:latest}
-#      - run: gcloud auth activate-service-account --key-file=${HOME}/gcp-key.json
-#      - run: gcloud --quiet config set project ${GCP_PROJECT}
-#      - run: gcloud --quiet config set compute/zone ${CLUSTER_REGION}
-#      - run: gcloud container clusters get-credentials ${CLUSTER_NAME}
-#      - run: cat k8s/*.yaml | envsubst | kubectl apply -f -
-
   deploy-image:
     docker:
       - image: google/cloud-sdk
     steps:
+      - checkout
+      - run: apt-get install gettext-base
       - run: |
           echo $GCP_CREDS | gcloud auth activate-service-account --key-file=-
           export IMAGE=eu.gcr.io/${GCP_PROJECT}/${IMAGE_NAME}
