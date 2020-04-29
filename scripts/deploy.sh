@@ -3,10 +3,10 @@
 set -ex
 
 echo "-> Authenticating with GCloud"
-cat <<EOF > creds.json
+cat <<EOF > ${HOME}/gcp-key.json
 $GCP_CREDS
 EOF
-gcloud auth activate-service-account --key-file=creds.json
+gcloud auth activate-service-account --key-file=${HOME}/gcp-key.json
 
 gcp_project_name="jagendra-atal-prakash-contino"
 
