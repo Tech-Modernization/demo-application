@@ -35,11 +35,3 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
     GCP_CREDS = <jagendra-atal-prakash-contino-b9e4ac7fe2dc.json file contents>
     GCP_PROJECT = jagendra-atal-prakash-contino
     IMAGE_NAME = demo-application
-        
-        
-2) Create secret using container registry service account
-   
-   kubectl create secret docker-registry gcr-json-key --docker-server=eu.gcr.io --docker-username=_json_key --docker-password="$(cat /Users/japrakash/Downloads/jagendra-atal-prakash-contino-b9e4ac7fe2dc.json)"
-
-
-        
