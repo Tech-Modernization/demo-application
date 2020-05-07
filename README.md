@@ -32,8 +32,8 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
 
         CLUSTER_NAME = demo-application
         CLUSTER_REGION = europe-west1
-        GCP_CREDS = <jagendra-atal-prakash-contino-b9e4ac7fe2dc.json file contents>
-        GCP_CREDS_CONTAINER = secret "gcr-json-key" data value
+        GCP_CREDS = <terraform serviceaccount json key data>
+        GCP_CREDS_CONTAINER = <container-registry-user serviceaccount json key data>
         GCP_PROJECT = jagendra-atal-prakash-contino
         IMAGE_NAME = demo-application
 
@@ -43,7 +43,7 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
 
 3) After successful pipeline run, find IP of the ingress and then create a Cloud DNS Zone using that IP. This is specific to GCP and for exposing to public using your domain name e.g. I have created domain as https://testmynewapplication.tk/
          
-         kubectl get ingress
+         kubectl get ingress demo-ingress
          
 ### TODO
 
