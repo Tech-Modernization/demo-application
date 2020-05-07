@@ -45,4 +45,16 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
          
          kubectl get ingress
          
+### TODO
 
+1) Create multi-tenant environment using seperate namespace and move application to spicific namespace
+
+2) Introduce podsecuritypolicy to achieve least privelage best practice
+
+3) Introduce securitycontext and container must not run as root
+
+4) Introduce Horizontal Pod Autoscaler/Vertical Pod Autoscaler accordingly
+
+5) Introduce LimitRange for deployments
+
+6) Review "Smoke test" step in pipeline and improve that accordingly
