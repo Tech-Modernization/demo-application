@@ -1,4 +1,4 @@
-# demo-application
+# Demo Application
 Demo application
 
 Build this application in your local env using command -
@@ -16,7 +16,7 @@ or in detached mode
 Awesome, if we open up http://localhost:8080 within our browser, we should see that our application is successfully responding with Hello, "/".  
 
 
-
+## Getting started
 To run it in cloud, k8s is used and few required objects in the cluster are created as mentioned below.
 
 1) cert-manager
@@ -26,7 +26,7 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
 5) lets-encrypt
 6) application deployment & service
 
-**Steps to run this on cloud**
+### Steps to run this on cloud
 
 1) Create below mentioned env variables in CircleCi with respective values
 
