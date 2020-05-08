@@ -32,8 +32,7 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
 
         CLUSTER_NAME = demo-application
         CLUSTER_REGION = europe-west1
-        GCP_CREDS = <terraform serviceaccount json key data>
-        GCP_CREDS_CONTAINER = <container-registry-user serviceaccount json key data>
+        GCP_CREDS = <cicd-pipeline serviceaccount json key data>
         GCP_PROJECT = jagendra-atal-prakash-contino
         IMAGE_NAME = demo-application
 
