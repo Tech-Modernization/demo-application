@@ -27,6 +27,8 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
 
 ### Steps to run this on cloud
 
+Note - Infra for this application to run is created in https://github.com/contino/demo-infra-gcp
+
 1) Create below mentioned env variables in CircleCi with respective values
 
         CLUSTER_NAME = demo-application
