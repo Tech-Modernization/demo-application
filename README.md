@@ -19,12 +19,11 @@ Awesome, if we open up http://localhost:8080 within our browser, we should see t
 ## Getting started
 To run it in cloud, k8s is used and few required objects in the cluster are created as mentioned below.
 
-1) cert-manager
-2) certificate
-3) ingress-controller
-4) ingress
-5) lets-encrypt
-6) application deployment & service
+1) certificate
+2) ingress
+3) deployment
+4) service
+5) service-account
 
 ### Steps to run this on cloud
 
@@ -36,11 +35,11 @@ To run it in cloud, k8s is used and few required objects in the cluster are crea
         GCP_PROJECT = jagendra-atal-prakash-contino
         IMAGE_NAME = demo-application
 
-2) deployment.yaml file is the only place where 2 variables (IMAGE & VERSION) have to be substituted e.g.
+2) deployment.yaml file is the only place where 2 variables (IMAGE & VERSION) have to be substituted which is done already as given below
 
         cat k8s/*.yaml | envsubst | kubectl apply -f -
 
-3) After successful pipeline run, find IP of the ingress and then create a Cloud DNS Zone using that IP. This is specific to GCP and for exposing to public using your domain name e.g. I have created domain as https://testmynewapplication.tk/
+3) After successful pipeline run, find IP of the ingress and then create a Cloud DNS Zone using that IP. This is for exposing application to public using your domain name e.g. I have created domain as https://testmynewapplication.tk/
          
          kubectl get ingress demo-ingress
          
