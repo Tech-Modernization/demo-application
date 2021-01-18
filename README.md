@@ -40,7 +40,6 @@ Note - Infra for this application to run is created in https://github.com/contin
 2) deployment.yaml file is the only place where 2 variables (IMAGE & VERSION) have to be substituted which is done already in pipeline as given below
 
         cat k8s/*.yaml | envsubst | kubectl apply -f -
-         
 ### TODO
 
 1) Create multi-tenant environment using seperate namespace and move application to spicific namespace
