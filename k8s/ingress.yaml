@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: testmynewapplication.tk
+    - host: demoapplication.squadzero.io
       http:
         paths:
           - backend:
@@ -21,5 +21,5 @@ spec:
             path: /
   tls:
     - hosts:
-        - testmynewapplication.tk
+        - demoapplication.squadzero.io
       secretName: demo-crt

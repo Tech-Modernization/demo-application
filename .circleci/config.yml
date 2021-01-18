@@ -39,7 +39,7 @@ jobs:
           name: Smoke test
           command: |
             sleep 30
-            export HTTP_STATUS="$(curl -s -o /dev/null -w "%{http_code}" testmynewapplication.tk)"
+            export HTTP_STATUS="$(curl -s -o /dev/null -w "%{http_code}" demoapplication.squadzero.io)"
             if [ $HTTP_STATUS -ge 400 ]; then exit 1; fi
 
 workflows:
